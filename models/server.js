@@ -4,12 +4,12 @@ const cors = require('cors');
 const { dbConnection } = require('../database/config');
 
 //instalamos 
-    //express, 
-    //dotenv, 
-    //cors, 
-    //mongoose(para limitar quien va acceder osea desde el frontend), 
-    //bcryptjs para la encriptacion de contraseñas
-    //express-validator para la validacion de request recibidas
+//express, 
+//dotenv, 
+//cors, 
+//mongoose(para limitar quien va acceder osea desde el frontend), 
+//bcryptjs para la encriptacion de contraseñas
+//express-validator para la validacion de request recibidas
 
 class Server {
 
@@ -17,11 +17,18 @@ class Server {
         //creamoa app de express aqui
         this.app = express();
         this.port = process.env.PORT;
-        this.usuariosPath = '/api/usuarios';
+
+        this.paths = {
+            auth: '/api/auth',
+            buscar: '/api/buscar',
+            categorias: '/api/categorias',
+            productos: '/api/productos',
+            usuarios: '/api/usuarios',
+        }
 
         //Conectar a base de datos
         this.conectarDB();
-        
+
         //Middlewares
         this.middlewares();
 
@@ -29,7 +36,7 @@ class Server {
         this.routes();
     }
 
-    async conectarDB(){
+    async conectarDB() {
         await dbConnection();
     }
 
@@ -46,7 +53,11 @@ class Server {
 
     routes() {
         //aqui configuramos el path de las rutas para la api
-        this.app.use(this.usuariosPath, require('../routes/usuarios'))
+        this.app.use(this.paths.auth, require('../routes/auth'))
+        this.app.use(this.paths.buscar, require('../routes/buscar'))
+        this.app.use(this.paths.categorias, require('../routes/categorias'))
+        this.app.use(this.paths.productos, require('../routes/productos'))
+        this.app.use(this.paths.usuarios, require('../routes/usuarios'))
     }
 
     listen() {

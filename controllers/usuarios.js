@@ -10,13 +10,6 @@ const usuariosGet = async (req = request, res = response) => {
     //filtra solo los usuarios con estado 'true' mediante este objeto
     const query = { estado: true };
 
-    // const usuarios = await Usuario.find(query)
-    //     .skip(Number(desde))
-    //     .limit(Number(limite));
-
-    // //devuelve el total de registros
-    // const total = await Usuario.countDocuments();
-
     //ejecutar colecciones de promesas por ordenf y una por una se tiene que ejecutar si una no ejecuta la que sigue tampoco
     //desestructuracion de arreglos total(rdo de la primera promesa, etc)
     const [total, usuarios] = await Promise.all([
@@ -73,11 +66,9 @@ const usuariosPut = async (req, res = response) => {
 const usuariosDelete = async(req, res) => {
     const {id} = req.params;
 
-    //Fisicamente lo borramos
-    //const usuario = await Usuario.findByIdAndDelete(id);
-
     //cambiar estado a false del registro para que simule una eliminacion para la vista del frontend
     const usuario = await Usuario.findByIdAndUpdate(id, {estado: false})
+    
     res.json(usuario);
 }
 

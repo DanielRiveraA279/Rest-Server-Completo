@@ -38,15 +38,16 @@ const UsuarioSchema = Schema({
 
 });
 
-
-UsuarioSchema.methods.toJSON = function() {
+UsuarioSchema.methods.toJSON = function () {
     //1- sacamos la version y password
     //2- y todo lo demas va a ser almacenado en usuario que le puedu poner cualquier nombre a ese usuario
-    const {__v, password, ...usuario} = this.toObject();
+    const { __v, password, _id, ...usuario } = this.toObject();
+
+    usuario.uid = _id;
 
     return usuario //retornamos solo usuario
 }
 
 //nombre del esquema y el esquema en si
-module.exports = model('Usuarios', UsuarioSchema)
+module.exports = model('Usuario', UsuarioSchema)
 
