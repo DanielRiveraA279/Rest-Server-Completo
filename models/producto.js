@@ -1,5 +1,5 @@
 
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const ProductoSchema = Schema({
     nombre: {
@@ -26,8 +26,9 @@ const ProductoSchema = Schema({
         ref: 'Categoria', //que coleccion seria
         required: true
     },
-    descripcion: {type: String},
-    disponible: {type: Boolean, default: true},
+    descripcion: { type: String },
+    disponible: { type: Boolean, default: true },
+    img: { type: String }
 });
 
 //Lo que va a devolver en formato JSON
